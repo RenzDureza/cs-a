@@ -55,7 +55,7 @@ section .data
 	dspProgramLen equ $ - dspProgram
 
 	;Year Level
-	moveCursor5 db 27, '[4;45H'
+	moveCursor5 db 27, '[4;65H'
 	moveCursor5_len equ $ - moveCursor5
 	msgYearLevel db 'Enter Year Level: '
 	msgYearLevelLen equ $ - msgYearLevel
