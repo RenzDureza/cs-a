@@ -254,7 +254,7 @@ _start:
 		mov ecx, enroll  
 		mov edx, enrollLen      
 		int 0x80
-		ret
+		
 	
 	displayInputEnroll:
 		mov eax, 4
@@ -289,7 +289,7 @@ _start:
 		mov ecx, term  
 		mov edx, termLen          
 		int 0x80
-		ret
+		
 	
 	displayInputTerm:
 		mov eax, 4
@@ -323,7 +323,7 @@ _start:
 		mov ecx, schoolYear  
 		mov edx, schoolYearLen          
 		int 0x80
-		ret
+		
 		
    	displayInputSchoolYear:
 		mov eax, 4
@@ -358,7 +358,7 @@ _start:
 		mov ecx, studNum  
 		mov edx, studNumLen          
 		int 0x80
-		ret
+		
    	
    	displayInputStudNum:
 		mov eax, 4
@@ -387,7 +387,7 @@ _start:
 		mov ecx, college  
 		mov edx, collegeLen          
 		int 0x80
-		ret
+		
     
    	displayInputCollege:
 		mov eax, 4
@@ -422,7 +422,7 @@ _start:
 		mov ecx, program  
 		mov edx, programLen          
 		int 0x80
-		ret
+		
     
    	displayInputProgram:
 		mov eax, 4
@@ -456,7 +456,7 @@ _start:
 		mov ecx, name  
 		mov edx, nameLen          
 		int 0x80
-		ret
+		
 		
    	displayInputName:
 		mov eax, 4
@@ -485,7 +485,7 @@ _start:
 		mov ecx, yearLevel  
 		mov edx, yearLevelLen         
 		int 0x80
-		ret
+		
     
    	displayInputYearLevel:
 		mov eax, 4
