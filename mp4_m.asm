@@ -11,6 +11,8 @@ section .data
 	dspEnrollLen equ $ - dspEnroll
 	
 	;Student
+	moveCursor8 db 27, '[3,1H'
+	moveCursor8_len equ $ - moveCursor8
 	msgStudNum db 'Enter Student no.: ' 
 	msgStudNumLen equ $ - msgStudNum
 	dspStudNum db 'Student no.: '
@@ -366,6 +368,12 @@ _start:
 		ret
    	
    	displayInputStudNum:
+		mov eax, 4
+		mov ebx, 1
+		mov ecx, moveCursor8
+		mov edx, moveCursor8_len
+		int 0x80
+
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, dspStudNum
