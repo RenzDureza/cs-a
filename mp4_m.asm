@@ -3,8 +3,8 @@ section .data
 	clearScreen db 27, '[2J', 0
 
 	;Enrollment Status
-	moveCursor1 db 27 '[9;1H'
-	moveCursor1_len equ $ - moveCursor1
+	moveCursor3 db 27 '[9;1H'
+	moveCursor3_len equ $ - moveCursor3
 	msgEnroll db 'Enter Enrollment Status: '
 	msgEnrollLen equ $ - msgEnroll
 	dspEnroll db 'ENROLLMENT STATUS: '
