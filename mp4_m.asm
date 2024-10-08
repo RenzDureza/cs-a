@@ -3,122 +3,122 @@ section .data
 	clearScreen db 27, '[2J', 0
 
 	;Enrollment Status
-	moveCursor3 db 27 '[9;1H'
-	moveCursor3_len equ $ - moveCursor3
-	msgEnroll db 'Enter Enrollment Status: ' , 0
+	moveCursor1 db 27 '[9;1H'
+	moveCursor1_len equ $ - moveCursor1
+	msgEnroll db 'Enter Enrollment Status: '
 	msgEnrollLen equ $ - msgEnroll
-	dspEnroll db 'ENROLLMENT STATUS: ', 0
+	dspEnroll db 'ENROLLMENT STATUS: '
 	dspEnrollLen equ $ - dspEnroll
 	
 	;Term
 	msgTerm db 'Enter Term: ' 
 	msgTermLen equ $ - msgTerm
-	dspTerm db 'Term: ', 0
+	dspTerm db 'Term: '
 	dspTermLen equ $ - dspTerm
 	
 	;Student
 	msgStudNum db 'Enter Student no.: ' 
 	msgStudNumLen equ $ - msgStudNum
-	dspStudNum db 'Student no.: ', 0
+	dspStudNum db 'Student no.: '
 	dspStudNumLen equ $ - dspStudNum
 	
 	;Name
 	msgName db 'Enter Name: ' 
 	msgNameLen equ $ - msgName
-	dspName db 'Name: ', 0
+	dspName db 'Name: '
 	dspNameLen equ $ - dspName
 	
 	;School Year
 	msgSchoolYear db 'Enter School Year: '
 	msgSchoolYearLen equ $ - msgSchoolYear
-	dspSchoolYear db 'School Year: ', 0
+	dspSchoolYear db 'School Year: '
 	dspSchoolYearLen equ $ - dspSchoolYear
 	
 	;College
 	msgCollege db 'Enter College: '
 	msgCollegeLen equ $ - msgCollege
-	dspCollege db 'College: ', 0
+	dspCollege db 'College: '
 	dspCollegeLen equ $ - dspCollege
 	
 	;Year Level
 	msgYearLevel db 'Enter Year Level: '
 	msgYearLevelLen equ $ - msgYearLevel
-	dspYearLevel db 'Year Level: ', 0
+	dspYearLevel db 'Year Level: '
 	dspYearLevelLen equ $ - dspYearLevel
 	
 	;Program
 	msgProgram db 'Enter Program: '
 	msgProgramLen equ $ - msgProgram
-	dspProgram db 'Program: ', 0
+	dspProgram db 'Program: '
 	dspProgramLen equ $ - dspProgram
 
 	;cor
-	cor1 db 27, '[1;3H'          
+	cor1 db 27, '[7;3H'          
          db "Courses"
-         db 27, '[1;13H'
+         db 27, '[7;13H'
          db "Title"
-         db 27, '[1;42H'
+         db 27, '[7;42H'
          db "Section"
-         db 27, '[1;50H'
+         db 27, '[7;50H'
          db "Units"
-         db 27, '[1;56H'
+         db 27, '[7;56H'
          db "Days"
-         db 27, '[1;62H'
+         db 27, '[7;62H'
          db "Time"
-         db 27, '[1;82H'
+         db 27, '[7;82H'
          db "Room"
 	cor1Len equ $ - cor1
 
-    cor2 db 27, '[2;3H'          
+    cor2 db 27, '[8;3H'          
          db "CCS0005"
-         db 27, '[2;13H'
+         db 27, '[8;13H'
          db "INFORMATION MANAGEMENT (LEC)"
-         db 27, '[2;42H'
+         db 27, '[8;42H'
          db "TN24"
-         db 27, '[2;50H'
+         db 27, '[8;50H'
          db "2"
-         db 27, '[2;56H'
+         db 27, '[8;56H'
          db "T"
-         db 27, '[2;62H'
+         db 27, '[8;62H'
          db "16:00:00-18:40:00"
-         db 27, '[2;82H'
+         db 27, '[8;82H'
          db "ONLINE"
 	cor2Len equ $ - cor2
 
-    cor3 db 27, '[3;3H'          
+    cor3 db 27, '[9;3H'          
          db "CCS0023L"
-         db 27, '[3;13H'
+         db 27, '[9;13H'
          db "INFORMATION MANAGEMENT (LAB)"
-         db 27, '[3;42H'
+         db 27, '[9;42H'
          db "TN24"
-         db 27, '[3;50H'
+         db 27, '[9;50H'
          db "1"
-         db 27, '[3;56H'
+         db 27, '[9;56H'
          db "F"
-         db 27, '[3;62H'
+         db 27, '[9;62H'
          db "16:00:00-18:50:00"
-         db 27, '[3;82H'
+         db 27, '[9;82H'
          db "ONLINE"
 	cor3Len equ $ - cor3
 
-    cor4 db 27, '[4;3H'          
+    cor4 db 27, '[10;3H'          
          db "GED0081"
-         db 27, '[4;13H'
+         db 27, '[10;13H'
          db "COLLEGE PHYSICS 1 LECTURE"
-         db 27, '[4;42H'
+         db 27, '[10;42H'
          db "TN24"
-         db 27, '[4;50H'
+         db 27, '[10;50H'
          db "2"
-         db 27, '[4;56H'
+         db 27, '[10;56H'
          db "T"
-         db 27, '[4;62H'
+         db 27, '[10;62H'
          db "07:00:00-09:40:00"
-         db 27, '[4;82H'
+         db 27, '[10;82H'
          db "ONLINE"
 	cor4Len equ $ - cor4
 	
 	;fee
-	moveCursor2 db 27, '[16;1H'          
+	moveCursor2 db 27, '[12;3H'          
     moveCursor2_len equ $ - moveCursor2
     fees db 'Tuition Fee(21)', 0x9, 0x9, 0x9, 0x9, 0x9, 0x9, 0x9, 0x9, '43,218.00', 0xa,
     db 'Miscellaneous Fee', 0x9, 0x9, 0x9, 0x9, 0x9, 0x9, 0x9, '9,865.00', 0xa,	
