@@ -546,6 +546,3 @@ _start:
 		mov edx, fee2Len
 		int 0x80
 		ret
-
-	mov eax, 1
-    int 0x80
