@@ -538,15 +538,12 @@ _start:
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, fee1
-		mov edx, fee1_len
+		mov edx, fee1Len
 		int 0x80
 		
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, fee2
-		mov edx, fee2_len
+		mov edx, fee2Len
 		int 0x80
 		ret
-
-	mov eax, 1
-    int 0x80
