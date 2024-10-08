@@ -1,47 +1,89 @@
 section .data
-    moveCursor1 db 27, '[1;1H'          
-    moveCursor1_len equ $ - moveCursor1
-    cor1 db '| Courses  |             Title           |Section|Units|Days|       Time      |Room  |', 0xa
+	clearScreen db 27, '[2J', 0
+
+    cor1 db 27, '[7;3H'          
+         db "Courses"
+         db 27, '[7;13H'
+         db "Title"
+         db 27, '[7;42H'
+         db "Section"
+         db 27, '[7;50H'
+         db "Units"
+         db 27, '[7;56H'
+         db "Days"
+         db 27, '[7;62H'
+         db "Time"
+         db 27, '[7;82H'
+         db "Room", 0xa
 	cor1Len equ $ - cor1
 
-    moveCursor2 db 27, '[2;1H'          
-    moveCursor2_len equ $ - moveCursor2
-    cor2 db '| CCS0005  |INFORMATION MANAGEMENT (LEC) |  TN24 |  2  | T  |16:00:00-18:40:00|ONLINE|', 0xa
+    cor2 db 27, '[8;3H'          
+         db "CCS0005"
+         db 27, '[8;13H'
+         db "INFORMATION MANAGEMENT (LEC)"
+         db 27, '[8;42H'
+         db "TN24"
+         db 27, '[8;50H'
+         db "2"
+         db 27, '[8;56H'
+         db "T"
+         db 27, '[8;62H'
+         db "16:00:00-18:40:00"
+         db 27, '[8;82H'
+         db "ONLINE", 0xa
 	cor2Len equ $ - cor2
 
-    moveCursor3 db 27, '[3;1H'          
-    moveCursor3_len equ $ - moveCursor3
-    cor3 db '| CCS0021L |INFORMATION MANAGEMENT (LAB) |  TN24 |  1  | F  |16:00:00-18:50:00|ONLINE|', 0xa
+    cor3 db 27, '[9;3H'          
+         db "CCS0023L"
+         db 27, '[9;13H'
+         db "INFORMATION MANAGEMENT (LAB)"
+         db 27, '[9;42H'
+         db "TN24"
+         db 27, '[9;50H'
+         db "1"
+         db 27, '[9;56H'
+         db "F"
+         db 27, '[9;62H'
+         db "16:00:00-18:50:00"
+         db 27, '[9;82H'
+         db "ONLINE", 0xa
 	cor3Len equ $ - cor3
 
-    moveCursor4 db 27, '[4;1H'          
-    moveCursor4_len equ $ - moveCursor4
-    cor4 db '| GED0081  |COLLEGE PHYSICS 1 LECTURE    |  TN24 |  2  | T  |07:00:00-09:40:00|ONLINE|', 0xa
+    cor4 db 27, '[10;3H'          
+         db "GED0081"
+         db 27, '[10;13H'
+         db "COLLEGE PHYSICS 1 LECTURE"
+         db 27, '[10;42H'
+         db "TN24"
+         db 27, '[10;50H'
+         db "2"
+         db 27, '[10;56H'
+         db "T"
+         db 27, '[10;62H'
+         db "07:00:00-09:40:00"
+         db 27, '[10;82H'
+         db "ONLINE", 0xa
 	cor4Len equ $ - cor4
 
 section .text
     global _start
-    
 _start:
+    call clearTheScreen
     call displayCOR
+
+    clearTheScreen:
+		mov eax, 4
+		mov ebx, 1
+		mov ecx, clearScreen
+		mov edx, 5
+		int 0x80
+		ret
 
     displayCOR:
 		mov eax, 4
 		mov ebx, 1
-		mov ecx, moveCursor1
-		mov edx, moveCursor1_len
-		int 0x80
-
-		mov eax, 4
-		mov ebx, 1
 		mov ecx, cor1
 		mov edx, cor1Len
-		int 0x80
-        
-        mov eax, 4
-		mov ebx, 1
-		mov ecx, moveCursor2
-		mov edx, moveCursor2_len
 		int 0x80
 
 		mov eax, 4
@@ -50,22 +92,10 @@ _start:
 		mov edx, cor2Len
 		int 0x80
 
-        mov eax, 4
-		mov ebx, 1
-		mov ecx, moveCursor3
-		mov edx, moveCursor3_len
-		int 0x80
-
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, cor3
 		mov edx, cor3Len
-		int 0x80
-
-        mov eax, 4
-		mov ebx, 1
-		mov ecx, moveCursor4
-		mov edx, moveCursor4_len
 		int 0x80
 
 		mov eax, 4
