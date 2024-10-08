@@ -3,64 +3,64 @@ section .data
 	clearScreen db 27, '[2J', 0
 
 	;Enrollment Status
-	moveCursor6 db 27, '[1;3H'
-	moveCursor6_len equ $ - moveCursor6
+	moveCursor1 db 27 '[1;1H'
+	moveCursor1_len equ $ - moveCursor1
 	msgEnroll db 'Enter Enrollment Status: '
 	msgEnrollLen equ $ - msgEnroll
 	dspEnroll db 'ENROLLMENT STATUS: '
 	dspEnrollLen equ $ - dspEnroll
-	
-	;Student
-	moveCursor8 db 27, '[3,3H'
-	moveCursor8_len equ $ - moveCursor8
-	msgStudNum db 'Enter Student no.: ' 
-	msgStudNumLen equ $ - msgStudNum
-	dspStudNum db 'Student no.: '
-	dspStudNumLen equ $ - dspStudNum
-	
-	;Name
-	moveCursor7 db 27, '[4;3H'
-	moveCursor7_len equ $ - moveCursor7
-	msgName db 'Enter Name: ' 
-	msgNameLen equ $ - msgName
-	dspName db 'Name: '
-	dspNameLen equ $ - dspName
 
 	;Term
-	moveCursor1 db 27, '[2;3H'
-	moveCursor1_len equ $ - moveCursor1
+	moveCursor2 db 27 '[2;1H'
+	moveCursor2_len equ $ - moveCursor2
 	msgTerm db 'Enter Term: ' 
 	msgTermLen equ $ - msgTerm
 	dspTerm db 'Term: '
 	dspTermLen equ $ - dspTerm
-	
+
 	;School Year
-	moveCursor2 db 27, '[2;11H'
-	moveCursor2_len equ $ - moveCursor2
+	moveCursor3 db 27 '[2;11H'
+	moveCursor3_len equ $ - moveCursor3
 	msgSchoolYear db 'Enter School Year: '
 	msgSchoolYearLen equ $ - msgSchoolYear
 	dspSchoolYear db 'School Year: '
 	dspSchoolYearLen equ $ - dspSchoolYear
 	
+	;StudentNum
+	moveCursor4 db 27 '[3;1H'
+	moveCursor4_len equ $ - moveCursor4	
+	msgStudNum db 'Enter Student no.: ' 
+	msgStudNumLen equ $ - msgStudNum
+	dspStudNum db 'Student no.: '
+	dspStudNumLen equ $ - dspStudNum
+
 	;College
-	moveCursor3 db 27, '[3;45H'
-	moveCursor3_len equ $ - moveCursor3
+	moveCursor5 db 27 '[3;55H'
+	moveCursor5_len equ $ - moveCursor5
 	msgCollege db 'Enter College: '
 	msgCollegeLen equ $ - msgCollege
 	dspCollege db 'College: '
 	dspCollegeLen equ $ - dspCollege
-	
+
 	;Program
-	moveCursor4 db 27, '[3;73H'
-	moveCursor4_len equ $ - moveCursor4
+	moveCursor6 db 27 '[3;73H'
+	moveCursor6_len equ $ - moveCursor6
 	msgProgram db 'Enter Program: '
 	msgProgramLen equ $ - msgProgram
 	dspProgram db 'Program: '
 	dspProgramLen equ $ - dspProgram
-
+	
+	;Name
+	moveCursor7 db 27 '[4;1H'
+	moveCursor7_len equ $ - moveCursor7
+	msgName db 'Enter Name: ' 
+	msgNameLen equ $ - msgName
+	dspName db 'Name: '
+	dspNameLen equ $ - dspName
+	
 	;Year Level
-	moveCursor5 db 27, '[4;45H'
-	moveCursor5_len equ $ - moveCursor5
+	moveCursor8 db 27 '[4;55H'
+	moveCursor8_len equ $ - moveCursor8	
 	msgYearLevel db 'Enter Year Level: '
 	msgYearLevelLen equ $ - msgYearLevel
 	dspYearLevel db 'Year Level: '
@@ -266,8 +266,8 @@ _start:
 	displayInputEnroll:
 		mov eax, 4
 		mov ebx, 1
-		mov ecx, moveCursor6
-		mov edx, moveCursor6_len
+		mov ecx, moveCursor1
+		mov edx, moveCursor1_len
 		int 0x80 
 
 		mov eax, 4
@@ -301,8 +301,8 @@ _start:
 	displayInputTerm:
 		mov eax, 4
 		mov ebx, 1
-		mov ecx, moveCursor1
-		mov edx, moveCursor1_len 
+		mov ecx, moveCursor2
+		mov edx, moveCursor2_len 
 
 		mov eax, 4
 		mov ebx, 1
@@ -335,8 +335,8 @@ _start:
    	displayInputSchoolYear:
 		mov eax, 4
 		mov ebx, 1
-		mov ecx, moveCursor2
-		mov edx, moveCursor2_len
+		mov ecx, moveCursor3
+		mov edx, moveCursor3_len
 		int 0x80
 
 		mov eax, 4
@@ -370,8 +370,8 @@ _start:
    	displayInputStudNum:
 		mov eax, 4
 		mov ebx, 1
-		mov ecx, moveCursor8
-		mov edx, moveCursor8_len
+		mov ecx, moveCursor4
+		mov edx, moveCursor4_len
 		int 0x80
 
 		mov eax, 4
@@ -405,8 +405,8 @@ _start:
    	displayInputCollege:
 		mov eax, 4
 		mov ebx, 1
-		mov ecx, moveCursor3
-		mov edx, moveCursor3_len
+		mov ecx, moveCursor5
+		mov edx, moveCursor5_len
 		int 0x80
 
 		mov eax, 4
@@ -440,8 +440,8 @@ _start:
    	displayInputProgram:
 		mov eax, 4
 		mov ebx, 1
-		mov ecx, moveCursor4
-		mov edx, moveCursor4_len
+		mov ecx, moveCursor6
+		mov edx, moveCursor6_len
 
 		mov eax, 4
 		mov ebx, 1
@@ -509,8 +509,8 @@ _start:
    	displayInputYearLevel:
 		mov eax, 4
 		mov ebx, 1
-		mov ecx, moveCursor5
-		mov edx, moveCursor5_len
+		mov ecx, moveCursor8
+		mov edx, moveCursor8_len
 
 		mov eax, 4
 		mov ebx, 1
