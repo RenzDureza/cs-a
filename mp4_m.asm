@@ -53,18 +53,69 @@ section .data
 	dspProgramLen equ $ - dspProgram
 
 	;cor
-	moveCursor1 db 27, '[7;1H'          
-    moveCursor1_len equ $ - moveCursor1
-	cor db '|------------------------------------------------------------------------------------|', 0xa
-		db '| Courses  |             Title           |Section|Units|Days|       Time      |Room  |', 0xa
-	    db '|------------------------------------------------------------------------------------|', 0xa
-	    db '| CCS0005  |INFORMATION MANAGEMENT (LEC) |  TN24 |  2  | T  |16:00:00-18:40:00|ONLINE|', 0xa
-	    db '|------------------------------------------------------------------------------------|', 0xa
-	    db '| CCS0021L |INFORMATION MANAGEMENT (LAB) |  TN24 |  1  | F  |16:00:00-18:50:00|ONLINE|', 0xa
-	    db '|------------------------------------------------------------------------------------|', 0xa
-	    db '| GED0081  |COLLEGE PHYSICS 1 LECTURE    |  TN24 |  2  | T  |07:00:00-09:40:00|ONLINE|', 0xa
-	    db '|------------------------------------------------------------------------------------|', 0xa
-	corLen equ $ - cor
+	cor1 db 27, '[1;3H'          
+         db "Courses"
+         db 27, '[1;13H'
+         db "Title"
+         db 27, '[1;42H'
+         db "Section"
+         db 27, '[1;50H'
+         db "Units"
+         db 27, '[1;56H'
+         db "Days"
+         db 27, '[1;62H'
+         db "Time"
+         db 27, '[1;82H'
+         db "Room"
+	cor1Len equ $ - cor1
+
+    cor2 db 27, '[2;3H'          
+         db "CCS0005"
+         db 27, '[2;13H'
+         db "INFORMATION MANAGEMENT (LEC)"
+         db 27, '[2;42H'
+         db "TN24"
+         db 27, '[2;50H'
+         db "2"
+         db 27, '[2;56H'
+         db "T"
+         db 27, '[2;62H'
+         db "16:00:00-18:40:00"
+         db 27, '[2;82H'
+         db "ONLINE"
+	cor2Len equ $ - cor2
+
+    cor3 db 27, '[3;3H'          
+         db "CCS0023L"
+         db 27, '[3;13H'
+         db "INFORMATION MANAGEMENT (LAB)"
+         db 27, '[3;42H'
+         db "TN24"
+         db 27, '[3;50H'
+         db "1"
+         db 27, '[3;56H'
+         db "F"
+         db 27, '[3;62H'
+         db "16:00:00-18:50:00"
+         db 27, '[3;82H'
+         db "ONLINE"
+	cor3Len equ $ - cor3
+
+    cor4 db 27, '[4;3H'          
+         db "GED0081"
+         db 27, '[4;13H'
+         db "COLLEGE PHYSICS 1 LECTURE"
+         db 27, '[4;42H'
+         db "TN24"
+         db 27, '[4;50H'
+         db "2"
+         db 27, '[4;56H'
+         db "T"
+         db 27, '[4;62H'
+         db "07:00:00-09:40:00"
+         db 27, '[4;82H'
+         db "ONLINE"
+	cor4Len equ $ - cor4
 	
 	;fee
 	moveCursor2 db 27, '[16;1H'          
@@ -105,7 +156,7 @@ _start:
 	call displayPromtYearLevel
 	call displayPromtProgram
 	
-	;call clearTheScreen
+	call clearTheScreen
 
 	call displayInputEnroll
 	call displayInputTerm
@@ -123,13 +174,13 @@ _start:
    	mov eax, 1
    	int 0x80
 
-	;clearTheScreen:
-	;	mov eax, 4
-	;	mov ebx, 1
-	;	mov ecx, clearScreen
-	;	mov edx, 5
-	;	int 0x80
-	;	ret
+	clearTheScreen:
+		mov eax, 4
+		mov ebx, 1
+		mov ecx, clearScreen
+		mov edx, 5
+		int 0x80
+		ret
 	
 	displayPromtEnroll:
 		mov eax, 4
@@ -139,9 +190,9 @@ _start:
 		int 0x80
 
 		mov eax, 3
-		mov ebx, 2
+		mov ebx, 0
 		mov ecx, enroll  
-		mov edx, 50         
+		mov edx, enrollLen      
 		int 0x80
 		ret
 	
@@ -161,7 +212,7 @@ _start:
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, enroll
-		mov edx, 50
+		mov edx, enrollLen
 		int 0x80  
 		ret
    	
@@ -173,9 +224,9 @@ _start:
 		int 0x80
 
 		mov eax, 3
-		mov ebx, 2
+		mov ebx, 0
 		mov ecx, term  
-		mov edx, 50          
+		mov edx, termLen          
 		int 0x80
 		ret
 	
@@ -189,7 +240,7 @@ _start:
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, term
-		mov edx, 50
+		mov edx, termLen
 		int 0x80
 		ret
    	
@@ -201,9 +252,9 @@ _start:
 		int 0x80
 
 		mov eax, 3
-		mov ebx, 2
+		mov ebx, 0
 		mov ecx, studNum  
-		mov edx, 50          
+		mov edx, studNumLen          
 		int 0x80
 		ret
    	
@@ -217,7 +268,7 @@ _start:
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, studNum
-		mov edx, 50
+		mov edx, studNumLen
 		int 0x80
 		ret
    	
@@ -230,9 +281,9 @@ _start:
 		int 0x80
 
 		mov eax, 3
-		mov ebx, 2
+		mov ebx, 0
 		mov ecx, name  
-		mov edx, 50          
+		mov edx, nameLen          
 		int 0x80
 		ret
 		
@@ -246,7 +297,7 @@ _start:
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, name
-		mov edx, 50
+		mov edx, nameLen
 		int 0x80
 		ret 
     
@@ -258,9 +309,9 @@ _start:
 		int 0x80
 
 		mov eax, 3
-		mov ebx, 2
+		mov ebx, 0
 		mov ecx, schoolYear  
-		mov edx, 50          
+		mov edx, schoolYearLen          
 		int 0x80
 		ret
 		
@@ -274,7 +325,7 @@ _start:
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, schoolYear
-		mov edx, 50
+		mov edx, schoolYearLen
 		int 0x80
 		ret 
     
@@ -286,9 +337,9 @@ _start:
 		int 0x80
 
 		mov eax, 3
-		mov ebx, 2
+		mov ebx, 0
 		mov ecx, college  
-		mov edx, 50          
+		mov edx, collegeLen          
 		int 0x80
 		ret
     
@@ -302,7 +353,7 @@ _start:
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, college
-		mov edx, 50
+		mov edx, collegeLen
 		int 0x80
 		ret 
     
@@ -314,9 +365,9 @@ _start:
 		int 0x80
 
 		mov eax, 3
-		mov ebx, 2
+		mov ebx, 0
 		mov ecx, yearLevel  
-		mov edx, 50         
+		mov edx, yearLevelLen         
 		int 0x80
 		ret
     
@@ -330,7 +381,7 @@ _start:
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, yearLevel
-		mov edx, 50
+		mov edx, yearLevelLen
 		int 0x80
 		ret 
     
@@ -342,9 +393,9 @@ _start:
 		int 0x80
 
 		mov eax, 3
-		mov ebx, 2
+		mov ebx, 0
 		mov ecx, program  
-		mov edx, 50          
+		mov edx, programLen          
 		int 0x80
 		ret
     
@@ -358,21 +409,33 @@ _start:
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, program
-		mov edx, 50
+		mov edx, programLen
 		int 0x80
 		ret
 
     displayCOR:
 		mov eax, 4
 		mov ebx, 1
-		mov ecx, moveCursor1
-		mov edx, moveCursor1_len
+		mov ecx, cor1
+		mov edx, cor1Len
 		int 0x80
 
 		mov eax, 4
 		mov ebx, 1
-		mov ecx, cor
-		mov edx, corLen
+		mov ecx, cor2
+		mov edx, cor2Len
+		int 0x80
+
+		mov eax, 4
+		mov ebx, 1
+		mov ecx, cor3
+		mov edx, cor3Len
+		int 0x80
+
+		mov eax, 4
+		mov ebx, 1
+		mov ecx, cor4
+		mov edx, cor4Len
 		int 0x80
 		ret
     	
@@ -390,3 +453,5 @@ _start:
 		int 0x80
 		ret
 
+    mov eax, 1
+    int 0x80
