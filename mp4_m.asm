@@ -17,6 +17,8 @@ section .data
 	dspStudNumLen equ $ - dspStudNum
 	
 	;Name
+	moveCursor7 db 27, '[4;1H'
+	moveCursor7_len equ $ - moveCursor7
 	msgName db 'Enter Name: ' 
 	msgNameLen equ $ - msgName
 	dspName db 'Name: '
@@ -462,6 +464,12 @@ _start:
 		ret
 		
    	displayInputName:
+		mov eax, 4
+		mov ebx, 1
+		mov ecx, moveCursor7
+		mov edx, moveCursor7_len
+		int 0x80  
+
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, dspName
