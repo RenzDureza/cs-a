@@ -245,8 +245,6 @@ _start:
 		mov ecx, clearScreen
 		mov edx, 4
 		int 0x80
-		ret
-		
 	
 	;enroll
 	displayPromtEnroll:
@@ -564,6 +562,3 @@ _start:
 		mov edx, fee2Len
 		int 0x80
 		ret
-
-	mov eax, 1
-	int 0x80
