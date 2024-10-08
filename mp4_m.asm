@@ -239,9 +239,8 @@ _start:
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, clearScreen
-		mov edx, 4
+		mov edx, 5
 		int 0x80
-		ret
 	
 	;enroll
 	displayPromtEnroll:
