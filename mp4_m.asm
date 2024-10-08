@@ -241,6 +241,7 @@ _start:
 		mov ecx, clearScreen
 		mov edx, 5
 		int 0x80
+		ret
 	
 	;enroll
 	displayPromtEnroll:
