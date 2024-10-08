@@ -461,6 +461,7 @@ _start:
 		mov ebx, 1
 		mov ecx, moveCursor6
 		mov edx, moveCursor6_len
+		int 0x80
 
 		mov eax, 4
 		mov ebx, 1
@@ -498,6 +499,7 @@ _start:
 		mov ebx, 1
 		mov ecx, moveCursor8
 		mov edx, moveCursor8_len
+		int 0x80
 
 		mov eax, 4
 		mov ebx, 1
@@ -551,3 +553,6 @@ _start:
 		mov edx, fee2Len
 		int 0x80
 		ret
+	
+	mov eax, 1
+	int 0x80
