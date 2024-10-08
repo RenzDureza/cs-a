@@ -1,4 +1,6 @@
 section .data
+
+	clearScreen db 27, '[2J', 0
     cor1 db 27, '[1;3H'          
          db "Courses"
          db 27, '[1;13H'
@@ -66,7 +68,16 @@ section .data
 section .text
     global _start
 _start:
+    call clearTheScreen:
     call displayCOR
+
+    clearTheScreen:
+		mov eax, 4
+		mov ebx, 1
+		mov ecx, clearScreen
+		mov edx, 5
+		int 0x80
+		ret
 
     displayCOR:
 		mov eax, 4
