@@ -3,7 +3,7 @@ section .data
 	clearScreen db 27, '[2J', 0
 
 	;Enrollment Status
-	moveCursor6 db 27, '[1:1H'
+	moveCursor6 db 27, '[1;1H'
 	moveCursor6_len equ $ - moveCursor6
 	msgEnroll db 'Enter Enrollment Status: '
 	msgEnrollLen equ $ - msgEnroll
@@ -23,7 +23,7 @@ section .data
 	dspNameLen equ $ - dspName
 
 	;Term
-	moveCursor1 db 27, '[2:1H'
+	moveCursor1 db 27, '[2;1H'
 	moveCursor1_len equ $ - moveCursor1
 	msgTerm db 'Enter Term: ' 
 	msgTermLen equ $ - msgTerm
@@ -31,7 +31,7 @@ section .data
 	dspTermLen equ $ - dspTerm
 	
 	;School Year
-	moveCursor2 db 27, '[2:11H'
+	moveCursor2 db 27, '[2;11H'
 	moveCursor2_len equ $ - moveCursor2
 	msgSchoolYear db 'Enter School Year: '
 	msgSchoolYearLen equ $ - msgSchoolYear
@@ -39,7 +39,7 @@ section .data
 	dspSchoolYearLen equ $ - dspSchoolYear
 	
 	;College
-	moveCursor3 db 27, '[3:45H'
+	moveCursor3 db 27, '[3;45H'
 	moveCursor3_len equ $ - moveCursor3
 	msgCollege db 'Enter College: '
 	msgCollegeLen equ $ - msgCollege
@@ -47,7 +47,7 @@ section .data
 	dspCollegeLen equ $ - dspCollege
 	
 	;Program
-	moveCursor4 db 27, '[3:73H'
+	moveCursor4 db 27, '[3;73H'
 	moveCursor4_len equ $ - moveCursor4
 	msgProgram db 'Enter Program: '
 	msgProgramLen equ $ - msgProgram
@@ -55,7 +55,7 @@ section .data
 	dspProgramLen equ $ - dspProgram
 
 	;Year Level
-	moveCursor5 db 27, '[4:45H'
+	moveCursor5 db 27, '[4;45H'
 	moveCursor5_len equ $ - moveCursor5
 	msgYearLevel db 'Enter Year Level: '
 	msgYearLevelLen equ $ - msgYearLevel
