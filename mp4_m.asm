@@ -136,14 +136,28 @@ section .data
     	
 section .bss
 	enroll resb 50
+	enrollLen equ $ - enroll
+
 	term resb 50
+	termLen equ $ - term
+
 	studNum resb 50
+	studNumLen equ $ - studNum
+
 	name resb 50
+	nameLen equ $ - name
+
 	schoolYear resb 50
+	schoolYearLen equ $ - schoolYear
+
 	college resb 50
+	collegeLen equ $ - college
+
 	yearLevel resb 50
+	yearLevelLen equ $ - yearLevel
+
 	program resb 50
-	
+	programLen equ $ - program
 section .text
 	global _start
 _start:
