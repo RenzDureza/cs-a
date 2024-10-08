@@ -85,14 +85,28 @@ section .data
     	
 section .bss
 	enroll resb 50
+	enrollLen equ $ - enroll
+
 	term resb 50
+	termLen equ $ - term
+
 	studNum resb 50
+	studNumLen equ $ - studNum
+
 	name resb 50
+	nameLen equ $ - name
+
 	schoolYear resb 50
+	schoolYearLen equ $ - schoolYear
+
 	college resb 50
+	collegeLen equ $ - college
+
 	yearLevel resb 50
+	yearLevelLen equ $ - yearLevel
+
 	program resb 50
-	
+	programLen equ $ - program	
 section .text
 	global _start
 _start:
@@ -137,7 +151,7 @@ _start:
 		mov eax, 3
 		mov ebx, 2
 		mov ecx, enroll  
-		mov edx, 50         
+		mov edx, enrollLen      
 		int 0x80
 		ret
 	
@@ -157,7 +171,7 @@ _start:
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, enroll
-		mov edx, 50
+		mov edx, enrollLen
 		int 0x80  
 		ret
    	
@@ -171,7 +185,7 @@ _start:
 		mov eax, 3
 		mov ebx, 2
 		mov ecx, term  
-		mov edx, 50          
+		mov edx, termLen          
 		int 0x80
 		ret
 	
@@ -185,7 +199,7 @@ _start:
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, term
-		mov edx, 50
+		mov edx, termLen
 		int 0x80
 		ret
    	
@@ -199,7 +213,7 @@ _start:
 		mov eax, 3
 		mov ebx, 2
 		mov ecx, studNum  
-		mov edx, 50          
+		mov edx, studNumLen          
 		int 0x80
 		ret
    	
@@ -213,7 +227,7 @@ _start:
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, studNum
-		mov edx, 50
+		mov edx, studNumLen
 		int 0x80
 		ret
    	
@@ -228,7 +242,7 @@ _start:
 		mov eax, 3
 		mov ebx, 2
 		mov ecx, name  
-		mov edx, 50          
+		mov edx, nameLen          
 		int 0x80
 		ret
 		
@@ -242,7 +256,7 @@ _start:
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, name
-		mov edx, 50
+		mov edx, nameLen
 		int 0x80
 		ret 
     
@@ -256,7 +270,7 @@ _start:
 		mov eax, 3
 		mov ebx, 2
 		mov ecx, schoolYear  
-		mov edx, 50          
+		mov edx, schoolYearLen          
 		int 0x80
 		ret
 		
@@ -270,7 +284,7 @@ _start:
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, schoolYear
-		mov edx, 50
+		mov edx, schoolYearLen
 		int 0x80
 		ret 
     
@@ -284,7 +298,7 @@ _start:
 		mov eax, 3
 		mov ebx, 2
 		mov ecx, college  
-		mov edx, 50          
+		mov edx, collegeLen          
 		int 0x80
 		ret
     
@@ -298,7 +312,7 @@ _start:
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, college
-		mov edx, 50
+		mov edx, collegeLen
 		int 0x80
 		ret 
     
@@ -312,7 +326,7 @@ _start:
 		mov eax, 3
 		mov ebx, 2
 		mov ecx, yearLevel  
-		mov edx, 50         
+		mov edx, yearLevelLen         
 		int 0x80
 		ret
     
@@ -326,7 +340,7 @@ _start:
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, yearLevel
-		mov edx, 50
+		mov edx, yearLevelLen
 		int 0x80
 		ret 
     
@@ -340,7 +354,7 @@ _start:
 		mov eax, 3
 		mov ebx, 2
 		mov ecx, program  
-		mov edx, 50          
+		mov edx, programLen          
 		int 0x80
 		ret
     
@@ -354,7 +368,7 @@ _start:
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, program
-		mov edx, 50
+		mov edx, programLen
 		int 0x80
 		ret
 
