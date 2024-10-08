@@ -214,23 +214,23 @@ section .text
 _start:
 	call displayPromtEnroll
 	call displayPromtTerm
-	call displayPromtStudNum
-	call displayPromtName
 	call displayPromtSchoolYear
+	call displayPromtStudNum
 	call displayPromtCollege
-	call displayPromtYearLevel
 	call displayPromtProgram
+	call displayPromtName
+	call displayPromtYearLevel
 	
 	call clearTheScreen
 
 	call displayInputEnroll
 	call displayInputTerm
-	call displayInputStudNum
-	call displayInputName
 	call displayInputSchoolYear
+	call displayInputStudNum
 	call displayInputCollege
-	call displayInputYearLevel
 	call displayInputProgram
+	call displayInputName
+	call displayInputYearLevel
 	
 	call displayCOR
 	call displayFees
