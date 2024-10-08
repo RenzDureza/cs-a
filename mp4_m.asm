@@ -239,7 +239,7 @@ _start:
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, clearScreen
-		mov edx, 5
+		mov edx, 4
 		int 0x80
 		ret
 	
