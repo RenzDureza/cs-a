@@ -35,7 +35,7 @@ section .data
 	dspStudNumLen equ $ - dspStudNum
 
 	;College
-	moveCursor5 db 27, '[3;55H'
+	moveCursor5 db 27, '[3;42H'
 	moveCursor5_len equ $ - moveCursor5
 	msgCollege db 'Enter College: '
 	msgCollegeLen equ $ - msgCollege
@@ -43,7 +43,7 @@ section .data
 	dspCollegeLen equ $ - dspCollege
 
 	;Program
-	moveCursor6 db 27, '[3;73H'
+	moveCursor6 db 27, '[3;62H'
 	moveCursor6_len equ $ - moveCursor6
 	msgProgram db 'Enter Program: '
 	msgProgramLen equ $ - msgProgram
@@ -57,6 +57,14 @@ section .data
 	msgNameLen equ $ - msgName
 	dspName db 'Name: '
 	dspNameLen equ $ - dspName
+	
+	;Year Level
+	moveCursor8 db 27, '[4;42H'
+	moveCursor8_len equ $ - moveCursor8	
+	msgYearLevel db 'Enter Year Level: '
+	msgYearLevelLen equ $ - msgYearLevel
+	dspYearLevel db 'Year Level: '
+	dspYearLevelLen equ $ - dspYearLevel
 
 	;cor
 	cor1 db 27, '[8;3H'          
@@ -195,6 +203,9 @@ section .bss
 	college resb 50
 	collegeLen equ $ - college
 
+	yearLevel resb 50
+	yearLevelLen equ $ - yearLevel
+
 	program resb 50
 	programLen equ $ - program
 section .text
@@ -203,23 +214,19 @@ section .text
 _start:
 	call displayPromtEnroll
 	call displayPromtTerm
-	call displayPromtStudNum
-	call displayPromtName
 	call displayPromtSchoolYear
+	call displayPromtStudNum
 	call displayPromtCollege
-	call displayPromtYearLevel
 	call displayPromtProgram
+	call displayPromtName
+	call displayPromtYearLevel
 	
 	call clearTheScreen
 
-	call displayInputEnroll
-	call displayInputTerm
-	call displayInputStudNum
-	call displayInputName
-	call displayInputSchoolYear
-	call displayInputCollege
-	call displayInputYearLevel
-	call displayInputProgram
+	call displayInput1
+	call displayInput2
+	call displayInput3
+	call displayInput4
 	
 	call displayCOR
 	call displayFees
@@ -251,26 +258,6 @@ _start:
 		int 0x80
 		ret
 	
-	displayInputEnroll:
-		mov eax, 4
-		mov ebx, 1
-		mov ecx, moveCursor1
-		mov edx, moveCursor1_len
-		int 0x80 
-
-		mov eax, 4
-		mov ebx, 1
-		mov ecx, dspEnroll
-		mov edx, dspEnrollLen
-		int 0x80  
-
-		mov eax, 4
-		mov ebx, 1
-		mov ecx, enroll
-		mov edx, enrollLen
-		int 0x80  
-		ret
-   	
 	;term
    	displayPromtTerm:
 		mov eax, 4
@@ -285,26 +272,7 @@ _start:
 		mov edx, termLen          
 		int 0x80
 		ret
-	
-	displayInputTerm:
-		mov eax, 4
-		mov ebx, 1
-		mov ecx, moveCursor2
-		mov edx, moveCursor2_len 
 
-		mov eax, 4
-		mov ebx, 1
-		mov ecx, dspTerm
-		mov edx, dspTermLen
-		int 0x80  
-
-		mov eax, 4
-		mov ebx, 1
-		mov ecx, term
-		mov edx, termLen
-		int 0x80
-		ret
-   	
 	;schoolYear
 	displayPromtSchoolYear:
 		mov eax, 4
@@ -317,26 +285,6 @@ _start:
 		mov ebx, 0
 		mov ecx, schoolYear  
 		mov edx, schoolYearLen          
-		int 0x80
-		ret
-		
-   	displayInputSchoolYear:
-		mov eax, 4
-		mov ebx, 1
-		mov ecx, moveCursor3
-		mov edx, moveCursor3_len
-		int 0x80
-
-		mov eax, 4
-		mov ebx, 1
-		mov ecx, dspSchoolYear
-		mov edx, dspSchoolYearLen
-		int 0x80  
-
-		mov eax, 4
-		mov ebx, 1
-		mov ecx, schoolYear
-		mov edx, schoolYearLen
 		int 0x80
 		ret
 
@@ -352,26 +300,6 @@ _start:
 		mov ebx, 0
 		mov ecx, studNum  
 		mov edx, studNumLen          
-		int 0x80
-		ret
-   	
-   	displayInputStudNum:
-		mov eax, 4
-		mov ebx, 1
-		mov ecx, moveCursor4
-		mov edx, moveCursor4_len
-		int 0x80
-
-		mov eax, 4
-		mov ebx, 1
-		mov ecx, dspStudNum
-		mov edx, dspStudNumLen
-		int 0x80  
-
-		mov eax, 4
-		mov ebx, 1
-		mov ecx, studNum
-		mov edx, studNumLen
 		int 0x80
 		ret
 
@@ -390,7 +318,127 @@ _start:
 		int 0x80
 		ret
     
-   	displayInputCollege:
+	;program
+	displayPromtProgram:
+		mov eax, 4
+		mov ebx, 1
+		mov ecx, msgProgram
+		mov edx, msgProgramLen
+		int 0x80
+
+		mov eax, 3
+		mov ebx, 0
+		mov ecx, program  
+		mov edx, programLen          
+		int 0x80
+		ret
+
+   	;name
+   	displayPromtName:
+		mov eax, 4
+		mov ebx, 1
+		mov ecx, msgName
+		mov edx, msgNameLen
+		int 0x80
+
+		mov eax, 3
+		mov ebx, 0
+		mov ecx, name  
+		mov edx, nameLen          
+		int 0x80
+		ret
+
+	;yeasLevel
+	displayPromtYearLevel:
+		mov eax, 4
+		mov ebx, 1
+		mov ecx, msgYearLevel
+		mov edx, msgYearLevelLen
+		int 0x80
+
+		mov eax, 3
+		mov ebx, 0
+		mov ecx, yearLevel  
+		mov edx, yearLevelLen         
+		int 0x80
+		ret
+
+	displayInput1:
+		mov eax, 4
+		mov ebx, 1
+		mov ecx, moveCursor1
+		mov edx, moveCursor1_len
+		int 0x80 
+
+		mov eax, 4
+		mov ebx, 1
+		mov ecx, dspEnroll
+		mov edx, dspEnrollLen
+		int 0x80  
+
+		mov eax, 4
+		mov ebx, 1
+		mov ecx, enroll
+		mov edx, enrollLen
+		int 0x80  
+		ret
+	
+	displayInput2:
+		mov eax, 4
+		mov ebx, 1
+		mov ecx, moveCursor2
+		mov edx, moveCursor2_len 
+
+		mov eax, 4
+		mov ebx, 1
+		mov ecx, dspTerm
+		mov edx, dspTermLen
+		int 0x80  
+
+		mov eax, 4
+		mov ebx, 1
+		mov ecx, term
+		mov edx, termLen
+		int 0x80
+		
+		mov eax, 4
+		mov ebx, 1
+		mov ecx, moveCursor3
+		mov edx, moveCursor3_len
+		int 0x80
+
+		mov eax, 4
+		mov ebx, 1
+		mov ecx, dspSchoolYear
+		mov edx, dspSchoolYearLen
+		int 0x80  
+
+		mov eax, 4
+		mov ebx, 1
+		mov ecx, schoolYear
+		mov edx, schoolYearLen
+		int 0x80
+		ret
+   	
+   	displayInput3:
+		mov eax, 4
+		mov ebx, 1
+		mov ecx, moveCursor4
+		mov edx, moveCursor4_len
+		int 0x80
+
+		mov eax, 4
+		mov ebx, 1
+		mov ecx, dspStudNum
+		mov edx, dspStudNumLen
+		int 0x80  
+
+		mov eax, 4
+		mov ebx, 1
+		mov ecx, studNum
+		mov edx, studNumLen
+		int 0x80
+
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, moveCursor5
@@ -408,28 +456,12 @@ _start:
 		mov ecx, college
 		mov edx, collegeLen
 		int 0x80
-		ret
 
-	;program
-	displayPromtProgram:
-		mov eax, 4
-		mov ebx, 1
-		mov ecx, msgProgram
-		mov edx, msgProgramLen
-		int 0x80
-
-		mov eax, 3
-		mov ebx, 0
-		mov ecx, program  
-		mov edx, programLen          
-		int 0x80
-		ret
-    
-   	displayInputProgram:
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, moveCursor6
 		mov edx, moveCursor6_len
+		int 0x80
 
 		mov eax, 4
 		mov ebx, 1
@@ -443,23 +475,8 @@ _start:
 		mov edx, programLen
 		int 0x80
 		ret
-   	
-   	;name
-   	displayPromtName:
-		mov eax, 4
-		mov ebx, 1
-		mov ecx, msgName
-		mov edx, msgNameLen
-		int 0x80
-
-		mov eax, 3
-		mov ebx, 0
-		mov ecx, name  
-		mov edx, nameLen          
-		int 0x80
-		ret
 		
-   	displayInputName:
+   	displayInput4:
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, moveCursor7
@@ -477,28 +494,12 @@ _start:
 		mov ecx, name
 		mov edx, nameLen
 		int 0x80
-		ret  
-    
-	;yeasLevel
-	displayPromtYearLevel:
-		mov eax, 4
-		mov ebx, 1
-		mov ecx, msgYearLevel
-		mov edx, msgYearLevelLen
-		int 0x80
 
-		mov eax, 3
-		mov ebx, 0
-		mov ecx, yearLevel  
-		mov edx, yearLevelLen         
-		int 0x80
-		ret
-    
-   	displayInputYearLevel:
 		mov eax, 4
 		mov ebx, 1
 		mov ecx, moveCursor8
 		mov edx, moveCursor8_len
+		int 0x80
 
 		mov eax, 4
 		mov ebx, 1
@@ -511,7 +512,7 @@ _start:
 		mov ecx, yearLevel
 		mov edx, yearLevelLen
 		int 0x80
-		ret 
+		ret  
 
     displayCOR:
 		mov eax, 4
@@ -552,3 +553,6 @@ _start:
 		mov edx, fee2Len
 		int 0x80
 		ret
+	
+	mov eax, 1
+	int 0x80
