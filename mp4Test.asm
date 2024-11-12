@@ -68,7 +68,7 @@ section .data
 section .text
     global _start
 _start:
-    call clearTheScreen:
+    call clearTheScreen
     call displayCOR
 
     clearTheScreen:
