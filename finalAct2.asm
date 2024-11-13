@@ -27,8 +27,31 @@ section .data
 	promptBday db 'Enter your birth day (1 - 31): ', 0
 	promptBdayLen equ $ - promptBday
 
-	zodiacSign db 'My Zodiac Sign is: ', 0
-	zodiacSignLen equ $ - zodiacSign
+	; Zodiac signs and descriptions
+    aries db "My Zodiac Sign is Aries", 0
+    ariesDesc db "Short description of Aries: No filter, easily bored, and will do anything on a dare.", 0
+    taurus db "My Zodiac Sign is Taurus", 0
+    taurusDesc db "Short description of Taurus: Reliable, patient, practical, devoted, responsible, stable.", 0
+    gemini db "My Zodiac Sign is Gemini", 0
+    geminiDesc db "Short description of Gemini: Gentle, affectionate, curious, adaptable, ability to learn quickly and exchange ideas.", 0
+    cancer db "My Zodiac Sign is Cancer", 0
+    cancerDesc db "Short description of Cancer: Tenacious, highly imaginative, loyal, emotional, sympathetic, persuasive.", 0
+    leo db "My Zodiac Sign is Leo", 0
+    leoDesc db "Short description of Leo: Creative, passionate, generous, warm-hearted, cheerful, humorous.", 0
+    virgo db "My Zodiac Sign is Virgo", 0
+    virgoDesc db "Short description of Virgo: Loyal, analytical, kind, hardworking, practical.", 0
+    libra db "My Zodiac Sign is Libra", 0
+    libraDesc db "Short description of Libra: Cooperative,diplomatic, gracious, fair-minded, social.", 0
+    scorpio db "My Zodiac Sign is Scorpio", 0
+    scorpioDesc db "Short description of Scorpio: Resourceful, brave, passionate, stubborn, a true friend.", 0
+    sagittarius db "My Zodiac Sign is Sagittarius", 0
+    sagittariusDesc db "Short description of Sagittarius: Generous, idealistic, great sense of humor.", 0
+    capricorn db "My Zodiac Sign is Capricorn", 0
+    capricornDesc db "Short description of Capricorn: Responsible, disciplined, self-control, good managers.", 0
+    aquarius db "My Zodiac Sign is Aquarius", 0
+    aquariusDesc db "Short description of Aquarius: Progressive, original, independent, humanitarian.", 0
+    pisces db "My Zodiac Sign is Pisces", 0
+    piscesDesc db "Short description of Pisces: Compassionate, artistic, intuitive, gentle, wise, musical.", 0
 section .bss
 	month resb 32
 	day resb 32
