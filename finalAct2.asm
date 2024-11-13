@@ -277,18 +277,16 @@ _start:
 		mov esi, piscesDesc
 		jmp .setZodiac
 	.default:
-		; Default case if no zodiac sign matches
-		mov edi, pisces
-		mov esi, piscesDesc
-	
+    ; Default case if no zodiac sign matches
+    mov edi, pisces
+    mov esi, piscesDesc
+
 	.setZodiac:
 		mov ecx, 32
 		rep movsb
 		mov edi, zodiacDesc
 		mov esi, ariesDesc
 		mov ecx, 128
-		rep movsb
-		ret ecx, 128
 		rep movsb
 		ret
 
