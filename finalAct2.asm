@@ -97,7 +97,7 @@ _start:
     call dispInfo
     call userIO
     call determineZodiac
-    call displayZodiac
+	call displayZodiac
     call exit
 
 	dispInfo:
@@ -360,4 +360,14 @@ _start:
 		mov ecx, 128
 		rep movsb
 		ret
+	
+	displayZodiac:
+		PRINT zodiac, 32
+		PRINT zodiacDesc, 128
+		ret
+	
+	exit:
+		mov eax, 1
+		xor ebx, ebx
+		int 0x80
 			
