@@ -100,245 +100,264 @@ _start:
     call displayZodiac
     call exit
 
-dispInfo:
-    PRINT name, nameLen
-    PRINT studNum, studNumLen
-    ret
+	dispInfo:
+		PRINT name, nameLen
+		PRINT studNum, studNumLen
+		ret
 
-userIO:
-    PRINT promptMonth, promptMonthLen
-    READ month, 32
-    PRINT promptBday, promptBdayLen
-    READ day, 32
-    ret
+	userIO:
+		PRINT promptMonth, promptMonthLen
+		READ month, 32
+		PRINT promptBday, promptBdayLen
+		READ day, 32
+		ret
 
-determineZodiac:
-    ; Convert month and day to integers
-    mov eax, [month]
-    sub eax, '0'
-    mov [month], eax
-    mov eax, [day]
-    sub eax, '0'
-    mov [day], eax
+	determineZodiac:
+		mov eax, [month]
+		mov ebx, [day]
 
-    ; Determine zodiac sign based on month and day
-    mov eax, [month]
-    mov ebx, [day]
-    cmp eax, 3
-    jne .notAries
-    cmp ebx, 21
-    jb .notAries
-    mov edi, aries
-    mov esi, ariesDesc
-    jmp .setZodiac
-.notAries:
-    cmp eax, 4
-    jne .notTaurus
-    cmp ebx, 19
-    ja .notTaurus
-    PRINT aries, ariesLen
-    PRINT ariesDesc, ariesDescLen
-    jmp .setZodiac
-.notTaurus:
-    cmp eax, 4
-    jne .notTaurus2
-    cmp ebx, 20
-    jb .notTaurus2
-    PRINT taurus, taurusLen
-	PRINT taurusDesc, taurusDescLen
-    jmp .setZodiac
-.notTaurus2:
-    cmp eax, 5
-    jne .notGemini
-    cmp ebx, 20
-    ja .notGemini
-    PRINT taurus, taurusLen
-	PRINT taurusDesc, taurusDescLen
-    jmp .setZodiac
-.notGemini:
-    cmp eax, 5
-    jne .notGemini2
-    cmp ebx, 21
-    jb .notGemini2
-	PRINT gemini, geminiLen
-	PRINT geminiDesc, geminiDescLen
-    jmp .setZodiac
-.notGemini2:
-    cmp eax, 6
-    jne .notCancer
-    cmp ebx, 20
-    ja .notCancer
-    PRINT gemini, geminiLen
-	PRINT geminiDesc, geminiDescLen
-    jmp .setZodiac
-.notCancer:
-    cmp eax, 6
-    jne .notCancer2
-    cmp ebx, 21
-    jb .notCancer2
-    PRINT cancer, cancerLen
-	PRINT cancerDesc, cancerDescLen
-    jmp .setZodiac
-.notCancer2:
-    cmp eax, 7
-    jne .notLeo
-    cmp ebx, 22
-    ja .notLeo
-    PRINT cancer, cancerLen
-	PRINT cancerDesc, cancerDescLen
-    jmp .setZodiac
-.notLeo:
-    cmp eax, 7
-    jne .notLeo2
-    cmp ebx, 23
-    jb .notLeo2
-    PRINT leo, leoLen
-	PRINT leoDesc, leoDescLen
-    jmp .setZodiac
-.notLeo2:
-    cmp eax, 8
-    jne .notVirgo
-    cmp ebx, 22
-    ja .notVirgo
-    PRINT leo, leoLen
-	PRINT leoDesc, leoDescLen
-    jmp .setZodiac
-.notVirgo:
-    cmp eax, 8
-    jne .notVirgo2
-    cmp ebx, 23
-    jb .notVirgo2
-    PRINT virgo, virgoLen
-	PRINT virgoDesc, virgoDescLen
-    jmp .setZodiac
-.notVirgo2:
-    cmp eax, 9
-    jne .notLibra
-    cmp ebx, 22
-    ja .notLibra
-    PRINT virgo, virgoLen
-	PRINT virgoDesc, virgoDescLen
-    jmp .setZodiac
-.notLibra:
-    cmp eax, 9
-    jne .notLibra2
-    cmp ebx, 23
-    jb .notLibra2
-    PRINT libra, libraLen
-	PRINT libraDesc, libraDescLen
-    jmp .setZodiac
-.notLibra2:
-    cmp eax, 10
-    jne .notScorpio
-    cmp ebx, 22
-    ja .notScorpio
-    PRINT libra, libraLen
-	PRINT libraDesc, libraDescLen
-    jmp .setZodiac
-.notScorpio:
-    cmp eax, 10
-    jne .notScorpio2
-    cmp ebx, 23
-    jb .notScorpio2
-    PRINT scorpio, scorpioLen
-	PRINT scorpioDesc, scorpioDescLen
-    jmp .setZodiac
-.notScorpio2:
-    cmp eax, 11
-    jne .notSagittarius
-    cmp ebx, 21
-    ja .notSagittarius
-    PRINT scorpio, scorpioLen
-	PRINT scorpioDesc, scorpioDescLen
-    jmp .setZodiac
-.notSagittarius:
-    cmp eax, 11
-    jne .notSagittarius2
-    cmp ebx, 22
-    jb .notSagittarius2
-    PRINT sagittarius, sagittariusLen
-	PRINT sagittariusDesc, sagittariusDescLen
-    jmp .setZodiac
-.notSagittarius2:
-    cmp eax, 12
-    jne .notCapricorn
-    cmp ebx, 21
-    ja .notCapricorn
-    PRINT sagittarius, sagittariusLen
-	PRINT sagittariusDesc, sagittariusDescLen
-    jmp .setZodiac
-.notCapricorn:
-    cmp eax, 12
-    jne .notCapricorn2
-    cmp ebx, 22
-    jb .notCapricorn2
-    PRINT capricorn, capricornLen
-	PRINT capricornDesc, capricornDescLen
-    jmp .setZodiac
-.notCapricorn2:
-    cmp eax, 1
-    jne .notAquarius
-    cmp ebx, 19
-    ja .notAquarius
-    PRINT capricorn, capricornLen
-	PRINT capricornDesc, capricornDescLen
-    jmp .setZodiac
-.notAquarius:
-    cmp eax, 1
-    jne .notAquarius2
-    cmp ebx, 20
-    jb .notAquarius2
-    PRINT aquarius, aquariusLen
-	PRINT aquariusDesc, aquariusDescLen
-    jmp .setZodiac
-.notAquarius2:
-    cmp eax, 2
-    jne .notPisces
-    cmp ebx, 18
-    ja .notPisces
-    PRINT aquarius, aquariusLen
-	PRINT aquariusDesc, aquariusDescLen
-    jmp .setZodiac
-.notPisces:
-    cmp eax, 2
-    jne .notPisces2
-    cmp ebx, 19
-    jb .notPisces2
-    PRINT pisces, piscesLen
-	PRINT piscesDesc, piscesDescLen
-    jmp .setZodiac
-.notPisces2:
-    cmp eax, 3
-    jne .default
-    cmp ebx, 20
-    ja .default
-    PRINT pisces, piscesLen
-	PRINT piscesDesc, piscesDescLen
-    jmp .setZodiac
-.default:
-    ; Default case if no zodiac sign matches
-    mov edi, pisces
-    mov esi, piscesDesc
+		; Check for Aries (March 21 - April 19)
+		cmp eax, 3
+		jne .checkApril
+		cmp ebx, 21
+		jl .nextZodiac
+		jmp .setAries
 
-.setZodiac:
-    ; Copy zodiac sign to zodiac buffer
-    mov edi, zodiac
-    mov ecx, 32
-    rep movsb
+	.checkApril:
+		cmp eax, 4
+		jne .checkTaurus
+		cmp ebx, 19
+		jg .nextZodiac
 
-    ; Copy zodiac description to zodiacDesc buffer
-    mov edi, zodiacDesc
-    mov esi, zodiacDesc
-    mov ecx, 128
-    rep movsb
-    ret
+	.setAries:
+		mov edi, aries
+		mov esi, ariesDesc
+		jmp .setZodiac
 
-displayZodiac:
-    PRINT zodiac, 32
-    PRINT zodiacDesc, 128
-    ret
+	.checkTaurus:
+		; Check for Taurus (April 20 - May 20)
+		cmp eax, 4
+		jne .checkMay
+		cmp ebx, 20
+		jl .nextZodiac
+		jmp .setTaurus
 
-exit:
-    mov eax, 1
-    xor ebx, ebx
-    int 0x80
+	.checkMay:
+		cmp eax, 5
+		jne .checkGemini
+		cmp ebx, 20
+		jg .nextZodiac
+
+	.setTaurus:
+		mov edi, taurus
+		mov esi, taurusDesc
+		jmp .setZodiac
+
+	.checkGemini:
+		; Check for Gemini (May 21 - June 20)
+		cmp eax, 5
+		jne .checkJune
+		cmp ebx, 21
+		jl .nextZodiac
+		jmp .setGemini
+
+	.checkJune:
+		cmp eax, 6
+		jne .checkCancer
+		cmp ebx, 20
+		jg .nextZodiac
+
+	.setGemini:
+		mov edi, gemini
+		mov esi, geminiDesc
+		jmp .setZodiac
+
+	.checkCancer:
+		; Check for Cancer (June 21 - July 22)
+		cmp eax, 6
+		jne .checkJuly
+		cmp ebx, 21
+		jl .nextZodiac
+		jmp .setCancer
+
+	.checkJuly:
+		cmp eax, 7
+		jne .checkLeo
+		cmp ebx, 22
+		jg .nextZodiac
+
+	.setCancer:
+		mov edi, cancer
+		mov esi, cancerDesc
+		jmp .setZodiac
+
+	.checkLeo:
+		; Check for Leo (July 23 - August 22)
+		cmp eax, 7
+		jne .checkAugust
+		cmp ebx, 23
+		jl .nextZodiac
+		jmp .setLeo
+
+	.checkAugust:
+		cmp eax, 8
+		jne .checkVirgo
+		cmp ebx, 22
+		jg .nextZodiac
+
+	.setLeo:
+		mov edi, leo
+		mov esi, leoDesc
+		jmp .setZodiac
+
+	.checkVirgo:
+		; Check for Virgo (August 23 - September 22)
+		cmp eax, 8
+		jne .checkSeptember
+		cmp ebx, 23
+		jl .nextZodiac
+		jmp .setVirgo
+
+	.checkSeptember:
+		cmp eax, 9
+		jne .checkLibra
+		cmp ebx, 22
+		jg .nextZodiac
+
+	.setVirgo:
+		mov edi, virgo
+		mov esi, virgoDesc
+		jmp .setZodiac
+
+	.checkLibra:
+		; Check for Libra (September 23 - October 22)
+		cmp eax, 9
+		jne .checkOctober
+		cmp ebx, 23
+		jl .nextZodiac
+		jmp .setLibra
+
+	.checkOctober:
+		cmp eax, 10
+		jne .checkScorpio
+		cmp ebx, 22
+		jg .nextZodiac
+
+	.setLibra:
+		mov edi, libra
+		mov esi, libraDesc
+		jmp .setZodiac
+
+	.checkScorpio:
+		; Check for Scorpio (October 23 - November 21)
+		cmp eax, 10
+		jne .checkNovember
+		cmp ebx, 23
+		jl .nextZodiac
+		jmp .setScorpio
+
+	.checkNovember:
+		cmp eax, 11
+		jne .checkSagittarius
+		cmp ebx, 21
+		jg .nextZodiac
+
+	.setScorpio:
+		mov edi, scorpio
+		mov esi, scorpioDesc
+		jmp .setZodiac
+
+	.checkSagittarius:
+		; Check for Sagittarius (November 22 - December 21)
+		cmp eax, 11
+		jne .checkDecember
+		cmp ebx, 22
+		jl .nextZodiac
+		jmp .setSagittarius
+
+	.checkDecember:
+		cmp eax, 12
+		jne .checkCapricorn
+		cmp ebx, 21
+		jg .nextZodiac
+
+	.setSagittarius:
+		mov edi, sagittarius
+		mov esi, sagittariusDesc
+		jmp .setZodiac
+
+	.checkCapricorn:
+		; Check for Capricorn (December 22 - January 19)
+		cmp eax, 12
+		jne .checkJanuary
+		cmp ebx, 22
+		jl .nextZodiac
+		jmp .setCapricorn
+
+	.checkJanuary:
+		cmp eax, 1
+		jne .checkAquarius
+		cmp ebx, 19
+		jg .nextZodiac
+
+	.setCapricorn:
+		mov edi, capricorn
+		mov esi, capricornDesc
+		jmp .setZodiac
+
+	.checkAquarius:
+		; Check for Aquarius (January 20 - February 18)
+		cmp eax, 1
+		jne .checkFebruary
+		cmp ebx, 20
+		jl .nextZodiac
+		jmp .setAquarius
+
+	.checkFebruary:
+		cmp eax, 2
+		jne .checkPisces
+		cmp ebx, 18
+		jg .nextZodiac
+
+	.setAquarius:
+		mov edi, aquarius
+		mov esi, aquariusDesc
+		jmp .setZodiac
+
+	.checkPisces:
+		; Check for Pisces (February 19 - March 20)
+		cmp eax, 2
+		jne .checkMarch
+		cmp ebx, 19
+		jl .nextZodiac
+		jmp .setPisces
+
+	.checkMarch:
+		cmp eax, 3
+		jne .default
+		cmp ebx, 20
+		jg .nextZodiac
+
+	.setPisces:
+		mov edi, pisces
+		mov esi, piscesDesc
+		jmp .setZodiac
+
+	.default:
+		; Default case if no zodiac sign matches
+		mov edi, pisces
+		mov esi, piscesDesc
+
+	.setZodiac:
+		; Copy zodiac sign to zodiac buffer
+		mov edi, zodiac
+		mov ecx, 32
+		rep movsb
+
+		; Copy zodiac description to zodiacDesc buffer
+		mov edi, zodiacDesc
+		mov esi, zodiacDesc
+		mov ecx, 128
+		rep movsb
+		ret
+			
