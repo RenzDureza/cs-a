@@ -79,10 +79,10 @@ userIO:
 
 determineZodiac:
     ; Convert month and day to integers
-    mov eax, month
+    mov eax, [month]
     sub eax, '0'
     mov [month], eax
-    mov eax, day
+    mov eax, [day]
     sub eax, '0'
     mov [day], eax
 
@@ -303,5 +303,3 @@ exit:
     mov eax, 1
     xor ebx, ebx
     int 0x80
-
-
