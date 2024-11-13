@@ -361,6 +361,11 @@ _start:
 		rep movsb
 		ret
 	
+	.nextZodiac:
+		mov edi, pisces
+		mov esi, piscesDesc
+		jmp .setZodiac
+	
 	displayZodiac:
 		PRINT zodiac, 32
 		PRINT zodiacDesc, 128
