@@ -289,7 +289,7 @@ determineZodiac:
     mov ecx, 32
     rep movsb
     mov edi, zodiacDesc
-    mov esi, ariesDesc
+    mov esi, zodiacDesc
     mov ecx, 128
     rep movsb
     ret
@@ -302,4 +302,4 @@ displayZodiac:
 exit:
     mov eax, 1
     xor ebx, ebx
-    int 0x80
+    int 0x80 
