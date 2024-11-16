@@ -14,10 +14,10 @@
     int 0x80
 %endmacro
 
-%macro CREATE 5
+%macro CREATE 3
     mov  eax, 8
     mov  ebx, %1
-    mov  ecx, 0777       
+    mov  ecx, 644       
     int  0x80
 
     mov [fd_out], eax
@@ -30,10 +30,11 @@
 
     mov eax, 4
     mov ebx, [fd_out]
-    mov ecx, %4
-    mov edx, %5
+    mov ecx, result
+    mov edx, 1
     int 0x80
 %endmacro
+
 section .data
     menu db "+--------Georgette Calculator--------+", 0xa
             db ": A. Add                              :", 0xa, 0xa
@@ -72,7 +73,7 @@ section .data
     newLine db 0xa
     newLineLen equ $ - newLine
 
-    fileName db "Georgette Calculator.txt"
+    fileName db "Georgette Calculator.txt", 0
 
     goodbye db "Bye... Thank you for using Georgette Calculator", 0xa
     goodbyeLen equ $ - goodbye
@@ -119,7 +120,7 @@ _start:
         PRINT resultAdd, resultAddLen
         PRINT result, 5
         PRINT newLine, newLineLen
-        CREATE fileName, resultAdd, resultAddLen, result, 5
+        CREATE fileName, resultAdd, resultAddLen
         jmp againPrompt
     
     sub:
@@ -136,7 +137,7 @@ _start:
         PRINT resultSub, resultSubLen
         PRINT result, 5
         PRINT newLine, newLineLen
-        CREATE fileName, resultSub, resultSubLen, result, 5
+        CREATE fileName, resultSub, resultSubLen
         jmp againPrompt
 
     mul:
@@ -154,7 +155,7 @@ _start:
         PRINT resultMul, resultMulLen
         PRINT result, 5
         PRINT newLine, newLineLen
-        CREATE fileName, resultMul, resultMulLen, result, 5
+        CREATE fileName, resultMul, resultMulLen
         jmp againPrompt
     
     div:
@@ -174,7 +175,7 @@ _start:
         PRINT resultDiv, resultDivLen
         PRINT result, 1
         PRINT newLine, newLineLen
-        CREATE fileName, resultDiv, resultDivLen, result, 5
+        CREATE fileName, resultDiv, resultDivLen
         jmp againPrompt
     
     invalidChoice:
