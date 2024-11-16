@@ -15,10 +15,11 @@
 %endmacro
 
 %macro CREATE 3
-    mov  eax, 8
-    mov  ebx, %1
-    mov  ecx, 644       
-    int  0x80
+    mov eax, 5
+    mov ebx, %1
+    mov ecx, 0x441
+    mov edx, 0x1A4
+    int 0x80
 
     mov [fd_out], eax
 
@@ -32,6 +33,16 @@
     mov ebx, [fd_out]
     mov ecx, result
     mov edx, 1
+    int 0x80
+
+    mov eax, 4
+    mov ebx, [fd_out]
+    mov ecx, newLine
+    mov edx, newLineLen
+    int 0x80
+
+    mov eax, 6
+    mov ebx, [fd_out]
     int 0x80
 %endmacro
 
@@ -73,7 +84,7 @@ section .data
     newLine db 0xa
     newLineLen equ $ - newLine
 
-    fileName db "Georgette Calculator.txt", 0
+    fileName db "Georgette_Calculator.txt", 0
 
     goodbye db "Bye... Thank you for using Georgette Calculator", 0xa
     goodbyeLen equ $ - goodbye
