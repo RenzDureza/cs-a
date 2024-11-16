@@ -1,378 +1,226 @@
-%macro PRINT 2
-	mov eax, 4
-	mov ebx, 1
-	mov ecx, %1
-	mov edx, %2
-	int 0x80
-%endmacro
-
-%macro READ 2
-	mov eax, 3
-	mov ebx, 0
-	mov ecx, %1
-	mov edx, %2
-	int 0x80
-%endmacro
-
 section .data
-    name db "Program by: Aldrin Renz Dureza", 0
-    nameLen equ $-name
-    studNum db "Student Number: Your student number", 0
-    studNumLen equ $-studNum
-    promptMonth db "Enter your birth month (1-12): ", 0
-    promptMonthLen equ $-promptMonth
-    promptBday db "Enter your birthday (1-31): ", 0
-    promptBdayLen equ $-promptBday
-
-    ; Zodiac signs and descriptions
-    aries db "My Zodiac Sign is Aries", 0
-	ariesLen equ $-aries
-    ariesDesc db "Short description of Aries: No filter, easily bored, and will do anything on a dare.", 0
-	ariesDescLen equ $-ariesDesc
-
-    taurus db "My Zodiac Sign is Taurus", 0
-	taurusLen equ $-taurus
-    taurusDesc db "Short description of Taurus: Reliable, patient, practical, devoted, responsible, stable.", 0
-    taurusDescLen equ $-taurusDesc
-
-	gemini db "My Zodiac Sign is Gemini", 0
-	geminiLen equ $-gemini
-    geminiDesc db "Short description of Gemini: Gentle, affectionate, curious, adaptable, ability to learn quickly and exchange ideas.", 0
-    geminiDescLen equ $-geminiDesc
-
-	cancer db "My Zodiac Sign is Cancer", 0
-	cancerLen equ $-cancer
-    cancerDesc db "Short description of Cancer: Tenacious, highly imaginative, loyal, emotional, sympathetic, persuasive.", 0
-    cancerDescLen equ $-cancerDesc
-
-	leo db "My Zodiac Sign is Leo", 0
-	leoLen equ $-leo
-    leoDesc db "Short description of Leo: Creative, passionate, generous, warm-hearted, cheerful, humorous.", 0
-    leoDescLen equ $-leoDesc
-
-	virgo db "My Zodiac Sign is Virgo", 0
-	virgoLen equ $-virgo
-    virgoDesc db "Short description of Virgo: Loyal, analytical, kind, hardworking, practical.", 0
-    virgoDescLen equ $-virgoDesc
-
-	libra db "My Zodiac Sign is Libra", 0
-	libraLen equ $-libra
-    libraDesc db "Short description of Libra: Cooperative, diplomatic, gracious, fair-minded, social.", 0
-    libraDescLen equ $-libraDesc
-
-	scorpio db "My Zodiac Sign is Scorpio", 0
-	scorpioLen equ $-scorpio
-    scorpioDesc db "Short description of Scorpio: Resourceful, brave, passionate, stubborn, a true friend.", 0
-    scorpioDescLen equ $-scorpioDesc
-
-	sagittarius db "My Zodiac Sign is Sagittarius", 0
-	sagittariusLen equ $-sagittarius
-    sagittariusDesc db "Short description of Sagittarius: Generous, idealistic, great sense of humor.", 0
-    sagittariusDescLen equ $-sagittariusDesc
-
-	capricorn db "My Zodiac Sign is Capricorn", 0
-	capricornLen equ $-capricorn
-    capricornDesc db "Short description of Capricorn: Responsible, disciplined, self-control, good managers.", 0
-    capricornDescLen equ $-capricornDesc
-
-	aquarius db "My Zodiac Sign is Aquarius", 0
-	aquariusLen equ $-aquarius
-    aquariusDesc db "Short description of Aquarius: Progressive, original, independent, humanitarian.", 0
-    aquariusDescLen equ $-aquariusDesc
-
-	pisces db "My Zodiac Sign is Pisces", 0
-	piscesLen equ $-pisces
-    piscesDesc db "Short description of Pisces: Compassionate, artistic, intuitive, gentle, wise, musical.", 0
-	piscesDescLen equ $-piscesDesc
+    prompt_month db "Enter birth month (1 - 12): ", 0
+    prompt_month_len equ $ - prompt_month
+    prompt_day db "Enter birth day (1 - 31): ", 0
+    prompt_day_len equ $ - prompt_day
+    msg_aries db "You are Aries!", 10, 0
+    msg_taurus db "You are Taurus!", 10, 0
+    msg_gemini db "You are Gemini!", 10, 0
+    msg_cancer db "You are Cancer!", 10, 0
+    msg_leo db "You are Leo!", 10, 0
+    msg_virgo db "You are Virgo!", 10, 0
+    msg_libra db "You are Libra!", 10, 0
+    msg_scorpio db "You are Scorpio!", 10, 0
+    msg_sagittarius db "You are Sagittarius!", 10, 0
+    msg_capricorn db "You are Capricorn!", 10, 0
+    msg_aquarius db "You are Aquarius!", 10, 0
+    msg_pisces db "You are Pisces!", 10, 0
 
 section .bss
-    month resb 32
-    day resb 32
-    zodiac resb 32
-    zodiacDesc resb 128
+    month resb 3       ; Reserve 3 bytes for month input (to handle 2 digits and null terminator)
+    day resb 3         ; Reserve 3 bytes for day input (to handle 2 digits and null terminator)
 
 section .text
     global _start
+
 _start:
-    call dispInfo
-    call userIO
-    call determineZodiac
-	call displayZodiac
-    call exit
+    ; Prompt for birth month
+    mov eax, 4               ; sys_write syscall
+    mov ebx, 1               ; file descriptor (stdout)
+    mov ecx, prompt_month
+    mov edx, prompt_month_len ; length of the string
+    int 0x80                 ; make syscall
 
-	dispInfo:
-		PRINT name, nameLen
-		PRINT studNum, studNumLen
-		ret
+    ; Read month input from user (up to 2 characters)
+    mov eax, 3               ; sys_read syscall
+    mov ebx, 0               ; file descriptor (stdin)
+    mov ecx, month           ; store input in 'month' variable
+    mov edx, 3               ; read up to 3 bytes (2 digits and newline)
+    int 0x80                 ; make syscall
 
-	userIO:
-		PRINT promptMonth, promptMonthLen
-		READ month, 32
-		PRINT promptBday, promptBdayLen
-		READ day, 32
-		ret
+    ; Strip newline from month input (if present)
+    mov al, byte [month + 2]  ; check for newline (ASCII 0x0A)
+    cmp al, 0x0A
+    je strip_newline_month
+    jmp month_to_decimal      ; skip newline check if not found
 
-	determineZodiac:
-		mov eax, [month]
-		mov ebx, [day]
+strip_newline_month:
+    mov byte [month + 2], 0   ; replace newline with null terminator
 
-		; Check for Aries (March 21 - April 19)
-		cmp eax, 3
-		jne .checkApril
-		cmp ebx, 21
-		jl .nextZodiac
-		jmp .setAries
+month_to_decimal:
+    xor ebx, ebx             ; clear ebx for month result
+    mov ecx, 0               ; index to start at first character
+month_loop:
+    mov al, byte [month + ecx]
+    cmp al, 0                ; check for null terminator (end of input)
+    je day_prompt            ; if null, move to day input
+    sub al, '0'              ; convert ASCII to numeric
+    imul ebx, ebx, 10        ; multiply existing number by 10
+    add ebx, eax             ; add the new digit
+    inc ecx                  ; move to the next character
+    jmp month_loop
 
-	.checkApril:
-		cmp eax, 4
-		jne .checkTaurus
-		cmp ebx, 19
-		jg .nextZodiac
+day_prompt:
+    ; Prompt for birth day
+    mov eax, 4               ; sys_write syscall
+    mov ebx, 1               ; file descriptor (stdout)
+    mov ecx, prompt_day
+    mov edx, prompt_day_len  ; length of the string
+    int 0x80                 ; make syscall
 
-	.setAries:
-		mov edi, aries
-		mov esi, ariesDesc
-		jmp .setZodiac
+    ; Read day input from user (up to 2 characters)
+    mov eax, 3               ; sys_read syscall
+    mov ebx, 0               ; file descriptor (stdin)
+    mov ecx, day             ; store input in 'day' variable
+    mov edx, 3               ; read up to 3 bytes (2 digits and newline)
+    int 0x80                 ; make syscall
 
-	.checkTaurus:
-		; Check for Taurus (April 20 - May 20)
-		cmp eax, 4
-		jne .checkMay
-		cmp ebx, 20
-		jl .nextZodiac
-		jmp .setTaurus
+    ; Strip newline from day input (if present)
+    mov al, byte [day + 2]    ; check for newline (ASCII 0x0A)
+    cmp al, 0x0A
+    je strip_newline_day
+    jmp day_to_decimal        ; skip newline check if not found
 
-	.checkMay:
-		cmp eax, 5
-		jne .checkGemini
-		cmp ebx, 20
-		jg .nextZodiac
+strip_newline_day:
+    mov byte [day + 2], 0     ; replace newline with null terminator
 
-	.setTaurus:
-		mov edi, taurus
-		mov esi, taurusDesc
-		jmp .setZodiac
+day_to_decimal:
+    xor ecx, ecx             ; clear ecx for day result
+    mov edx, 0               ; index to start at first character
+day_loop:
+    mov al, byte [day + edx]
+    cmp al, 0                ; check for null terminator (end of input)
+    je zodiac_check          ; if null, proceed to zodiac check
+    sub al, '0'              ; convert ASCII to numeric
+    imul ecx, ecx, 10        ; multiply existing number by 10
+    add ecx, eax             ; add the new digit
+    inc edx                  ; move to the next character
+    jmp day_loop
 
-	.checkGemini:
-		; Check for Gemini (May 21 - June 20)
-		cmp eax, 5
-		jne .checkJune
-		cmp ebx, 21
-		jl .nextZodiac
-		jmp .setGemini
+zodiac_check:
+    ; Debugging print to verify month and day
+    ; Display month (ebx) and day (ecx) for debugging
+    mov eax, 4               ; sys_write syscall
+    mov ebx, 1               ; file descriptor (stdout)
+    mov ecx, month           ; pointer to month string
+    mov edx, 3               ; print the month number
+    int 0x80
 
-	.checkJune:
-		cmp eax, 6
-		jne .checkCancer
-		cmp ebx, 20
-		jg .nextZodiac
+    mov eax, 4               ; sys_write syscall
+    mov ebx, 1               ; file descriptor (stdout)
+    mov ecx, day             ; pointer to day string
+    mov edx, 3               ; print the day number
+    int 0x80
 
-	.setGemini:
-		mov edi, gemini
-		mov esi, geminiDesc
-		jmp .setZodiac
+    ; Now check for the zodiac sign based on month and day
+    ; Default to Capricorn
+    mov edx, msg_capricorn
 
-	.checkCancer:
-		; Check for Cancer (June 21 - July 22)
-		cmp eax, 6
-		jne .checkJuly
-		cmp ebx, 21
-		jl .nextZodiac
-		jmp .setCancer
+    ; January (1)
+    cmp ebx, 1
+    je january_check
+    ; February (2)
+    cmp ebx, 2
+    je february_check
+    ; March (3)
+    cmp ebx, 3
+    je march_check
+    ; April (4)
+    cmp ebx, 4
+    je april_check
+    ; May (5)
+    cmp ebx, 5
+    je may_check
+    ; June (6)
+    cmp ebx, 6
+    je june_check
+    ; July (7)
+    cmp ebx, 7
+    je july_check
+    ; August (8)
+    cmp ebx, 8
+    je august_check
+    ; September (9)
+    cmp ebx, 9
+    je september_check
+    ; October (10)
+    cmp ebx, 10
+    je october_check
+    ; November (11)
+    cmp ebx, 11
+    je november_check
+    ; December (12)
+    cmp ebx, 12
+    je december_check
+    jmp display              ; skip to display if no month match
 
-	.checkJuly:
-		cmp eax, 7
-		jne .checkLeo
-		cmp ebx, 22
-		jg .nextZodiac
+january_check:
+    cmp ecx, 20
+    jl display_capricorn
+    jmp display_aquarius
 
-	.setCancer:
-		mov edi, cancer
-		mov esi, cancerDesc
-		jmp .setZodiac
+february_check:
+    cmp ecx, 19
+    jle display_aquarius
+    jmp display_pisces
 
-	.checkLeo:
-		; Check for Leo (July 23 - August 22)
-		cmp eax, 7
-		jne .checkAugust
-		cmp ebx, 23
-		jl .nextZodiac
-		jmp .setLeo
+march_check:
+    cmp ecx, 21
+    jl display_pisces
+    jmp display_aries
 
-	.checkAugust:
-		cmp eax, 8
-		jne .checkVirgo
-		cmp ebx, 22
-		jg .nextZodiac
+april_check:
+    cmp ecx, 20
+    jl display_aries
+    jmp display_taurus
 
-	.setLeo:
-		mov edi, leo
-		mov esi, leoDesc
-		jmp .setZodiac
+may_check:
+    cmp ecx, 21
+    jl display_taurus
+    jmp display_gemini
 
-	.checkVirgo:
-		; Check for Virgo (August 23 - September 22)
-		cmp eax, 8
-		jne .checkSeptember
-		cmp ebx, 23
-		jl .nextZodiac
-		jmp .setVirgo
+june_check:
+    cmp ecx, 21
+    jl display_gemini
+    jmp display_cancer
 
-	.checkSeptember:
-		cmp eax, 9
-		jne .checkLibra
-		cmp ebx, 22
-		jg .nextZodiac
+july_check:
+    cmp ecx, 23
+    jl display_cancer
+    jmp display_leo
 
-	.setVirgo:
-		mov edi, virgo
-		mov esi, virgoDesc
-		jmp .setZodiac
+august_check:
+    cmp ecx, 23
+    jl display_leo
+    jmp display_virgo
 
-	.checkLibra:
-		; Check for Libra (September 23 - October 22)
-		cmp eax, 9
-		jne .checkOctober
-		cmp ebx, 23
-		jl .nextZodiac
-		jmp .setLibra
+september_check:
+    cmp ecx, 23
+    jl display_virgo
+    jmp display_libra
 
-	.checkOctober:
-		cmp eax, 10
-		jne .checkScorpio
-		cmp ebx, 22
-		jg .nextZodiac
+october_check:
+    cmp ecx, 23
+    jl display_libra
+    jmp display_scorpio
 
-	.setLibra:
-		mov edi, libra
-		mov esi, libraDesc
-		jmp .setZodiac
+november_check:
+    cmp ecx, 22
+    jl display_scorpio
+    jmp display_sagittarius
 
-	.checkScorpio:
-		; Check for Scorpio (October 23 - November 21)
-		cmp eax, 10
-		jne .checkNovember
-		cmp ebx, 23
-		jl .nextZodiac
-		jmp .setScorpio
+december_check:
+    cmp ecx, 22
+    jl display_sagittarius
+    jmp display_capricorn
 
-	.checkNovember:
-		cmp eax, 11
-		jne .checkSagittarius
-		cmp ebx, 21
-		jg .nextZodiac
+display:
+    ; Output the result message
+    mov eax, 4               ; sys_write syscall
+    mov ebx, 1               ; file descriptor (stdout)
+    int 0x80                 ; make syscall
 
-	.setScorpio:
-		mov edi, scorpio
-		mov esi, scorpioDesc
-		jmp .setZodiac
-
-	.checkSagittarius:
-		; Check for Sagittarius (November 22 - December 21)
-		cmp eax, 11
-		jne .checkDecember
-		cmp ebx, 22
-		jl .nextZodiac
-		jmp .setSagittarius
-
-	.checkDecember:
-		cmp eax, 12
-		jne .checkCapricorn
-		cmp ebx, 21
-		jg .nextZodiac
-
-	.setSagittarius:
-		mov edi, sagittarius
-		mov esi, sagittariusDesc
-		jmp .setZodiac
-
-	.checkCapricorn:
-		; Check for Capricorn (December 22 - January 19)
-		cmp eax, 12
-		jne .checkJanuary
-		cmp ebx, 22
-		jl .nextZodiac
-		jmp .setCapricorn
-
-	.checkJanuary:
-		cmp eax, 1
-		jne .checkAquarius
-		cmp ebx, 19
-		jg .nextZodiac
-
-	.setCapricorn:
-		mov edi, capricorn
-		mov esi, capricornDesc
-		jmp .setZodiac
-
-	.checkAquarius:
-		; Check for Aquarius (January 20 - February 18)
-		cmp eax, 1
-		jne .checkFebruary
-		cmp ebx, 20
-		jl .nextZodiac
-		jmp .setAquarius
-
-	.checkFebruary:
-		cmp eax, 2
-		jne .checkPisces
-		cmp ebx, 18
-		jg .nextZodiac
-
-	.setAquarius:
-		mov edi, aquarius
-		mov esi, aquariusDesc
-		jmp .setZodiac
-
-	.checkPisces:
-		; Check for Pisces (February 19 - March 20)
-		cmp eax, 2
-		jne .checkMarch
-		cmp ebx, 19
-		jl .nextZodiac
-		jmp .setPisces
-
-	.checkMarch:
-		cmp eax, 3
-		jne .default
-		cmp ebx, 20
-		jg .nextZodiac
-
-	.setPisces:
-		mov edi, pisces
-		mov esi, piscesDesc
-		jmp .setZodiac
-
-	.default:
-		; Default case if no zodiac sign matches
-		mov edi, pisces
-		mov esi, piscesDesc
-
-	.setZodiac:
-		; Copy zodiac sign to zodiac buffer
-		mov edi, zodiac
-		mov ecx, 32
-		rep movsb
-
-		; Copy zodiac description to zodiacDesc buffer
-		mov edi, zodiacDesc
-		mov esi, zodiacDesc
-		mov ecx, 128
-		rep movsb
-		ret
-	
-	.nextZodiac:
-		mov edi, pisces
-		mov esi, piscesDesc
-		jmp .setZodiac
-	
-	displayZodiac:
-		PRINT zodiac, 32
-		PRINT zodiacDesc, 128
-		ret
-	
-	exit:
-		mov eax, 1
-		xor ebx, ebx
-		int 0x80
-			
+    ; Exit the program
+    mov eax, 1               ; sys_exit syscall
+    xor ebx, ebx             ; exit code 0
+    int 0x80                 ; make syscall
