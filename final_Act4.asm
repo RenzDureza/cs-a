@@ -58,11 +58,11 @@ section .data
         db "==============================================", 0xa
     orderMenuLen equ $ - orderMenu
 
-    choicePrompt db "Enter your order: ", 0
+    choicePrompt db "|Enter your order: ", 0
     choicePromptLen equ $ - choicePrompt
 
     tryAgain db "==============================================", 0xa
-            db "Do you want to order again? [Y/N]: ", 0
+            db "|Do you want to order again? [Y/N]: ", 0
     tryAgainLen equ $ - tryAgain
 
     exitMessage db "==============================================", 0xa
@@ -74,23 +74,23 @@ section .data
     invalidChoiceLen equ $ - invalidChoice
 
 ; order messages
-    plainRice db "|You ordered Plain Rice          - Php 5.00  |", 0xa
-    plainRiceLen equ $ - plainRice
+    plainRiceOrder db "|You ordered Plain Rice          - Php 5.00  |", 0xa
+    plainRiceOrderLen equ $ - plainRiceOrder
 
-    javaRice  db "|You ordered Java Rice           - Php 10.00 |", 0xa
-    javaRiceLen equ $ - javaRice
+    javaRiceOrder  db "|You ordered Java Rice           - Php 10.00 |", 0xa
+    javaRiceOrderLen equ $ - javaRiceOrder
 
-    fish      db "|You ordered Fish                - Php 35.00 |", 0xa
-    fishLen equ $ - fish
+    fishOrder      db "|You ordered Fish                - Php 35.00 |", 0xa
+    fishOrderLen equ $ - fish
 
-    pork      db "|You ordered Pork                - Php 50.00 |", 0xa
-    porkLen equ $ - pork
+    porkOrder      db "|You ordered Pork                - Php 50.00 |", 0xa
+    porkOrderLen equ $ - porkOrder
     
-    vegetable db "|You ordered Vegetable           - Php 20.00 |", 0xa
-    vegetableLen equ $ - vegetable
+    vegetableOrder db "|You ordered Vegetable           - Php 20.00 |", 0xa
+    vegetableOrderLen equ $ - vegetableOrder
 
-    sagingConYelo db "|You ordered Saging con yelo     - Php 60.00 |", 0xa
-    sagingConYeloLen equ $ - sagingConYelo
+    sagingConYeloOrder db "|You ordered Saging con yelo     - Php 60.00 |", 0xa
+    sagingConYeloOrderLen equ $ - sagingConYeloOrder
 
 ; Receipt message 
     plainRice db "==============================================", 0xa
@@ -152,32 +152,32 @@ _start:
         jmp printInvalidChoice
 
     plainRiceDisplay:
-        PRINT plainRice, plainRiceLen
+        PRINT plainRiceOrder, plainRiceOrderLen
         APPEND plainRice, plainRiceLen
         jmp tryAgainPrompt
 
     javaRiceDisplay:
-        PRINT javaRice, javaRiceLen
+        PRINT javaRiceOrder, javaRiceOrderLen
         APPEND javaRice, javaRiceLen
         jmp tryAgainPrompt
     
     fishDisplay:
-        PRINT fish, fishLen
+        PRINT fishOrder, fishOrderLen
         APPEND fish, fishLen
         jmp tryAgainPrompt
       
     porkDisplay:
-        PRINT pork, porkLen
+        PRINT porkOrder, porkOrderLen
         APPEND pork, porkLen
         jmp tryAgainPrompt
     
     vegetableDisplay:
-        PRINT vegetable, vegetableLen
+        PRINT vegetableOrder, vegetableOrderLen
         APPEND vegetable, vegetableLen
         jmp tryAgainPrompt
     
     sagingConYeloDisplay:
-        PRINT sagingConYelo, sagingConYeloLen
+        PRINT sagingConYeloOrder, sagingConYeloOrderLen
         APPEND sagingConYelo, sagingConYeloLen
         jmp tryAgainPrompt
     
