@@ -65,13 +65,34 @@ section .data
             db "Do you want to order again? [Y/N]: ", 0
     tryAgainLen equ $ - tryAgain
 
-    exitMessage db "Thank you! Please come again!", 0xa
+    exitMessage db "==============================================", 0xa
+                db "|Thank you! Please come again!               |", 0xa
+                db "==============================================", 0xa 
     exitMessageLen equ $ - exitMessage
 
     invalidChoice db "Invalid choice. Please try again.", 0xa
     invalidChoiceLen equ $ - invalidChoice
 
 ; order messages
+    plainRice db "|You ordered Plain Rice          - Php 5.00  |", 0xa
+    plainRiceLen equ $ - plainRice
+
+    javaRice  db "|You ordered Java Rice           - Php 10.00 |", 0xa
+    javaRiceLen equ $ - javaRice
+
+    fish      db "|You ordered Fish                - Php 35.00 |", 0xa
+    fishLen equ $ - fish
+
+    pork      db "|You ordered Pork                - Php 50.00 |", 0xa
+    porkLen equ $ - pork
+    
+    vegetable db "|You ordered Vegetable           - Php 20.00 |", 0xa
+    vegetableLen equ $ - vegetable
+
+    sagingConYelo db "|You ordered Saging con yelo     - Php 60.00 |", 0xa
+    sagingConYeloLen equ $ - sagingConYelo
+
+; Receipt message 
     plainRice db "==============================================", 0xa
         db "|Plain Rice                      - Php 5.00  |", 0xa
     plainRiceLen equ $ - plainRice
@@ -100,13 +121,14 @@ section .data
     newLineLen equ $ - newLine
 section .bss
     choice resb 2
-    tryAgainResb resb 5
-    fd_in resb 1
     fd_out resb 1
 section .text
     global _start
 _start:
     PRINT menu, menuLen
+    PRINT newLine, newLineLen
+    PRINT newLine, newLineLen
+
     call createFile
     call displayMenuLoop
     
@@ -143,7 +165,7 @@ _start:
         PRINT fish, fishLen
         APPEND fish, fishLen
         jmp tryAgainPrompt
-    
+      
     porkDisplay:
         PRINT pork, porkLen
         APPEND pork, porkLen
@@ -167,6 +189,7 @@ _start:
         jmp printExitMessage
 
     printExitMessage:
+        APPEND exitMessage, exitMessageLen
         PRINT exitMessage, exitMessageLen
         jmp exit
 
